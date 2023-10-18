@@ -44,7 +44,7 @@ const Home = () => {
               flex: 1,
               display: "flex",
               justifyContent: "center",
-              marginTop: "5px",
+              marginTop: "7px",
               padding: "4px",
             }}
           >
@@ -98,7 +98,7 @@ const Home = () => {
                   style={{ color: " #FA8072", marginLeft: "5px", fontSize: 23 }}
                 />
               </Box>
-              <button className="ladybug-btn">Ladybag</button>
+              <button className="ladybug-btn">Ladybug</button>
             </Box>
           </Box>
         </Box>

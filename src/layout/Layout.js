@@ -1,5 +1,6 @@
 import { Grid, useMediaQuery } from "@mui/material";
 import React from "react";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Layout = ({ children }) => {
   const isXsScreen = useMediaQuery("(max-width:600px)");
@@ -14,12 +15,11 @@ const Layout = ({ children }) => {
           sm={1}
           xs={0}
           style={{
-            background: "lightgray",
             display: "flex",
             justifyContent: "flex-end",
           }}
         >
-          1
+          <Sidebar />
         </Grid>
       )}
       <Grid
@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
         md={6}
         sm={7}
         xs={12}
-        style={{ height: "100vh" }}
+        style={{ height: "100vh", border: "1px solid rgb(243 244 246)" }}
       >
         {children}
       </Grid>

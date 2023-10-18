@@ -1,0 +1,19 @@
+.ladybug {
+  padding: 15px 60px;
+  border-radius: 30px;
+  font-size: 15px;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  background-color: #fa8072;
+  font-family: "Roboto", sans-serif;
+  margin-left: 15px;
+  margin-top: 20px;
+  font-weight: bold
+}
+
+@media (max-width:1120px) {
+    
+}
