@@ -1,0 +1,11 @@
+.follow-btn {
+  padding: 10px 15px;
+  background-color: black;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}

@@ -4,6 +4,7 @@ import "./Suggested.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { happenings } from "../../utils/suggested";
 import Happenings from "../Happenings/Happenings";
+import Follows from "../Follows/Follows";
 
 const Suggested = () => {
   return (
@@ -45,7 +46,7 @@ const Suggested = () => {
         sx={{
           backgroundColor: "rgb(243 244 246)",
           width: "275px",
-          padding: "10px 10px 30px 10px",
+          padding: "10px 10px 30px 13px",
           marginLeft: "40px",
           marginTop: "10px",
           borderRadius: "11px",
@@ -58,7 +59,18 @@ const Suggested = () => {
           <Happenings key={index} {...item} />
         ))}
       </Box>
-      <Box sx={{ backgroundColor: "purple" }}></Box>
+      <Box
+        sx={{
+          backgroundColor: "rgb(243 244 246)",
+          width: "275px",
+          padding: "10px 10px 30px 13px",
+          marginLeft: "40px",
+          marginTop: "15px",
+          borderRadius: "11px",
+        }}
+      >
+        <Follows />
+      </Box>
     </Box>
   );
 };

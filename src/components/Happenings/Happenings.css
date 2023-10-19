@@ -1,15 +1,18 @@
 .trending {
   color: gray;
   font-size: 13px;
+  font-family: "Roboto", sans-serif;
 }
 
 .hash {
   font-size: 14px;
   font-weight: bold;
+  font-family: "Roboto", sans-serif;
 }
 
 .ladybug-popular {
   font-size: 11px;
   color: gray;
   margin-top: 2px;
+  font-family: "Roboto", sans-serif;
 }

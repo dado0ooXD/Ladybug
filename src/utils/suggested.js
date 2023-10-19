@@ -9,19 +9,19 @@ export const happenings = [
   },
   {
     trending: "Trending in France",
-    hash: "#NextJS",
+    hash: "NextJS",
     ladybugs: "43K Ladybugs",
     more: <MoreHorizIcon style={{ color: "gray", marginRight: "10px" }} />,
   },
   {
     trending: "Trending in Germany",
-    hash: "#Angular",
+    hash: "Angular",
     ladybugs: "110K Ladybugs",
     more: <MoreHorizIcon style={{ color: "gray", marginRight: "10px" }} />,
   },
   {
     trending: "Trending in Norway",
-    hash: "#Javascript",
+    hash: "Javascript",
     ladybugs: "150K Ladybugs",
     more: <MoreHorizIcon style={{ color: "gray", marginRight: "10px" }} />,
   },
