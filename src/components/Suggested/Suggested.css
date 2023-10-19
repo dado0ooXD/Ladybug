@@ -1,0 +1,17 @@
+.suggested-input {
+  outline: none;
+  height: 67%;
+  width: 240px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(243 244 246);
+  margin-left: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: gray;
+}
+
+.suggested-input::placeholder {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+}

@@ -37,15 +37,7 @@ const Layout = ({ children }) => {
         {children}
       </Grid>
       {!isMdScreen && (
-        <Grid
-          item
-          xl={3.5}
-          lg={3.5}
-          md={4}
-          sm={4}
-          xs={0}
-          style={{ background: "lightgray" }}
-        >
+        <Grid item xl={3.5} lg={3.5} md={4} sm={4} xs={0}>
           <Suggested />
         </Grid>
       )}

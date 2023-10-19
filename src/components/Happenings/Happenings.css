@@ -1,0 +1,15 @@
+.trending {
+  color: gray;
+  font-size: 13px;
+}
+
+.hash {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.ladybug-popular {
+  font-size: 11px;
+  color: gray;
+  margin-top: 2px;
+}
