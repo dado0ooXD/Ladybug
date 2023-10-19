@@ -7,7 +7,7 @@ import FollowCard from "../FollowCard/FollowCard";
 const Follows = () => {
   return (
     <Box>
-      <Typography variant="h6" fontWeight="bold">
+      <Typography variant="h6"  fontWeight="bold">
         Who to follow
       </Typography>
       <Box>

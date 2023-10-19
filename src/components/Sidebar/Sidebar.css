@@ -1,5 +1,5 @@
 .ladybug {
-  padding: 15px 60px;
+  padding: 17px 63px;
   border-radius: 30px;
   font-size: 15px;
   color: white;
@@ -18,7 +18,22 @@
   height: 45px;
   width: 55px;
 
-  margin-left: 23px;
+  margin-left: 27px;
+}
+
+.user-img {
+  height: 37px;
+  width: 37px;
+}
+.user-name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+.user-tag {
+  color: gray;
+  font-size: 14px
 }
 
 @media (max-width: 899px) {

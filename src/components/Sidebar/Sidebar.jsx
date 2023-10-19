@@ -1,13 +1,16 @@
 import React from "react";
 import ladybug from "../../assets/ladybug.png";
-import { Box } from "@mui/material";
+import { Box,useMediaQuery } from "@mui/material";
 import "./Sidebar.css";
 import { sidebarButtons } from "../../utils/sidebarButtons";
 import SidebarButton from "../SidebarButton/SidebarButton";
 
 const Sidebar = () => {
+  const isMdScreen = useMediaQuery("(max-width:900px)");
+
   return (
-    <Box sx={{ width: "260px" }}>
+    <Box sx={{ width: "260px", display: "flex", justifyContent: "space-between", flexDirection: "column" }}>
+      <Box>
       <div className="ladybug-avatar" style={{ marginTop: "20px" }}>
         <img className="ladybug-logo" src={ladybug} alt="ladybug-logo" />
       </div>
@@ -25,6 +28,15 @@ const Sidebar = () => {
         ))}
       </div>
       <button className="ladybug">Ladybug</button>
+      </Box>
+       <Box sx = {{ paddingLeft: "30px", display: 'flex', alignItems: "center", marginBottom: "40px"}}>
+        <img src="https://next-busy-bee.vercel.app/assets/profile-pic.png" alt="user-img" className="user-img"/>
+        {!isMdScreen && <Box sx = {{marginLeft: "7px"}}>
+          <p className="user-name">Da</p>
+          <p className="user-tag">@davudxD</p>
+        </Box> }
+       
+      </Box>
     </Box>
   );
 };

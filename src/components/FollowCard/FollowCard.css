@@ -5,6 +5,8 @@
 
 .tag {
   font-size: 14px;
+  color: gray;
+  margin-top: 4px;
 }
 
 .profile-picture {

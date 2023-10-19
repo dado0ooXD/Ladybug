@@ -6,10 +6,11 @@ const FollowCard = ({ image, name, tag, followBtn }) => {
   return (
     <Box
       sx={{
-        marginTop: "20px",
+        marginTop: "24px",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        padding: "0 5px 0 0"
       }}
     >
       <Box sx={{ display: "flex" }}>
