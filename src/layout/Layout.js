@@ -1,9 +1,12 @@
 import { Grid, useMediaQuery } from "@mui/material";
 import React from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
+import Suggested from "../components/Suggested/Suggested";
 
 const Layout = ({ children }) => {
   const isXsScreen = useMediaQuery("(max-width:600px)");
+  const isMdScreen = useMediaQuery("(max-width:900px)");
+
   return (
     <Grid container sx={{ display: "flex", justifyContent: "center" }}>
       {!isXsScreen && (
@@ -26,14 +29,14 @@ const Layout = ({ children }) => {
         item
         xl={5}
         lg={5}
-        md={5}
-        sm={7}
+        md={9}
+        sm={11}
         xs={12}
         style={{ height: "100vh", border: "1px solid rgb(243 244 246)" }}
       >
         {children}
       </Grid>
-      {!isXsScreen && (
+      {!isMdScreen && (
         <Grid
           item
           xl={3.5}
@@ -43,7 +46,7 @@ const Layout = ({ children }) => {
           xs={0}
           style={{ background: "lightgray" }}
         >
-          3
+          <Suggested />
         </Grid>
       )}
     </Grid>
