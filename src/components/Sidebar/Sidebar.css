@@ -11,9 +11,96 @@
   font-family: "Roboto", sans-serif;
   margin-left: 25px;
   margin-top: 20px;
-  font-weight: bold
+  font-weight: bold;
 }
 
-@media (max-width:1120px) {
-    
+.ladybug-logo {
+  height: 45px;
+  width: 55px;
+
+  margin-left: 23px;
+}
+
+@media (max-width: 899px) {
+  .ladybug-avatar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .ladybug-logo {
+    height: 40px;
+    width: 50px;
+    margin-right: 10px;
+  }
+
+  .ladybug {
+    display: none;
+  }
+
+  .hide {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ladybug-avatar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .ladybug-logo {
+    height: 35px;
+    width: 45px;
+    margin-right: 10px;
+  }
+
+  .ladybug {
+    display: none;
+  }
+
+  .hide {
+    margin-right: 17px;
+  }
+}
+
+@media (max-width: 712px) {
+  .ladybug-avatar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .ladybug-logo {
+    height: 35px;
+    width: 45px;
+    margin-right: 7px;
+  }
+
+  .ladybug {
+    display: none;
+  }
+
+  .hide {
+    margin-right: 13px;
+  }
+}
+
+@media (max-width: 652px) {
+  .ladybug-avatar {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .ladybug-logo {
+    height: 35px;
+    width: 45px;
+    margin-right: 4px;
+  }
+
+  .ladybug {
+    display: none;
+  }
+
+  .hide {
+    margin-right: 13px;
+  }
 }

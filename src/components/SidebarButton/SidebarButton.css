@@ -1,0 +1,11 @@
+@media (max-width: 899px) {
+  .hide {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .typo {
+    display: none;
+  }
+}

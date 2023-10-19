@@ -51,7 +51,7 @@ const Home = () => {
             <img
               src={ladybug}
               alt="ladybug-logo"
-              style={{ height: "35px", width: "45px" }}
+              style={{ height: "35px", width: "40px" }}
             />
           </Box>
           <Box

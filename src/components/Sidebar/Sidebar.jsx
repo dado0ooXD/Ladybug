@@ -1,22 +1,32 @@
-import React from 'react';
+import React from "react";
 import ladybug from "../../assets/ladybug.png";
-import { Box } from '@mui/material';
-import './Sidebar.css'
-import { sidebarButtons } from '../../utils/sidebarButtons';
-import SidebarButton from '../SidebarButton/SidebarButton';
+import { Box } from "@mui/material";
+import "./Sidebar.css";
+import { sidebarButtons } from "../../utils/sidebarButtons";
+import SidebarButton from "../SidebarButton/SidebarButton";
 
 const Sidebar = () => {
   return (
-    <Box sx = {{width: "260px" }}>
-        <Box sx = {{marginTop: '20px'}}> 
-        <img src = {ladybug} alt='ladybug-logo' style={{ height: "45px", width: "55px", marginTop: "10px", marginLeft: "23px"}}/>
-        </Box>
-        <Box sx = {{display: "flex", flexDirection: "column",marginTop: "10px", marginLeft: "30px", justifyContent:"center" }}>
-{sidebarButtons.map((item, index) => <SidebarButton key={index} item = {item} />)}
-        </Box>
-        <button className='ladybug'>Ladybug</button>
-    </Box>
-  )
-}
+    <Box sx={{ width: "260px" }}>
+      <div className="ladybug-avatar" style={{ marginTop: "20px" }}>
+        <img className="ladybug-logo" src={ladybug} alt="ladybug-logo" />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
 
-export default Sidebar
+          marginLeft: "30px",
+        }}
+        className="hide"
+      >
+        {sidebarButtons.map((item, index) => (
+          <SidebarButton key={index} item={item} />
+        ))}
+      </div>
+      <button className="ladybug">Ladybug</button>
+    </Box>
+  );
+};
+
+export default Sidebar;
