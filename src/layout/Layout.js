@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
           item
           xl={3.5}
           lg={3.5}
-          md={2}
+          md={3}
           sm={1}
           xs={0}
           style={{
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
         item
         xl={5}
         lg={5}
-        md={6}
+        md={5}
         sm={7}
         xs={12}
         style={{ height: "100vh", border: "1px solid rgb(243 244 246)" }}

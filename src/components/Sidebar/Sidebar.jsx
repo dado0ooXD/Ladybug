@@ -9,9 +9,9 @@ const Sidebar = () => {
   return (
     <Box sx = {{width: "260px" }}>
         <Box sx = {{marginTop: '20px'}}> 
-        <img src = {ladybug} alt='ladybug-logo' style={{ height: "45px", width: "55px", marginTop: "10px", marginLeft: "10px"}}/>
+        <img src = {ladybug} alt='ladybug-logo' style={{ height: "45px", width: "55px", marginTop: "10px", marginLeft: "15px"}}/>
         </Box>
-        <Box sx = {{display: "flex", flexDirection: "column",marginTop: "10px", marginLeft: "15px", justifyContent:"center" }}>
+        <Box sx = {{display: "flex", flexDirection: "column",marginTop: "10px", marginLeft: "30px", justifyContent:"center" }}>
 {sidebarButtons.map((item, index) => <SidebarButton key={index} item = {item} />)}
         </Box>
         <button className='ladybug'>Ladybug</button>
