@@ -2,7 +2,8 @@ import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import React, { createContext, useState } from "react";
 import Sidebar from "../components/Sidebar/Sidebar";
 import Suggested from "../components/Suggested/Suggested";
-import AuthModal from "../components/AuthModal/AuthModal";
+import LoginModal from "../components/Modals/LoginModal";
+import SignupModal from "../components/Modals/SignupModal";
 
 //Context
 export const GlobalContext = createContext();
@@ -12,9 +13,12 @@ const Layout = ({ children }) => {
   const isMdScreen = useMediaQuery("(max-width:1200px)");
 
   const [open, setOpen] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
 
   return (
-    <GlobalContext.Provider value={{ open, setOpen }}>
+    <GlobalContext.Provider
+      value={{ open, setOpen, openSignup, setOpenSignup }}
+    >
       <Box sx={{ height: "100vh", position: "relative" }}>
         <Grid container sx={{ display: "flex", justifyContent: "center" }}>
           {!isXsScreen && (
@@ -87,10 +91,18 @@ const Layout = ({ children }) => {
             >
               Log in
             </button>
-            <button className="signup-btn">Sign up</button>
+            <button
+              className="signup-btn"
+              onClick={() => {
+                setOpenSignup(!openSignup);
+              }}
+            >
+              Sign up
+            </button>
           </div>
         </Box>
-        <AuthModal />
+        <LoginModal />
+        <SignupModal />
       </Box>
     </GlobalContext.Provider>
   );
