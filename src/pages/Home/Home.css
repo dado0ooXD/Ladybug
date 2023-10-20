@@ -18,3 +18,45 @@ textarea::placeholder {
   color: lightgray;
   letter-spacing: 0.5px;
 }
+
+.login-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: 2px solid white;
+  background-color: #fa8072;
+  font-family: "Roboto", sans-serif;
+}
+
+.signup-btn {
+  padding: 12px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .login-btn {
+    width: 200px;
+  }
+
+  .signup-btn {
+    width: 200px;
+  }
+
+  .buttons {
+    width: "100%";
+  }
+}
