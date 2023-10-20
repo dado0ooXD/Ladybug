@@ -30,6 +30,7 @@ textarea::placeholder {
   border: 2px solid white;
   background-color: #fa8072;
   font-family: "Roboto", sans-serif;
+  font-weight: bold;
 }
 
 .signup-btn {
@@ -54,6 +55,34 @@ textarea::placeholder {
 
   .signup-btn {
     width: 200px;
+  }
+
+  .buttons {
+    width: "100%";
+  }
+}
+
+@media (max-width: 428px) {
+  .login-btn {
+    width: 150px;
+  }
+
+  .signup-btn {
+    width: 150px;
+  }
+
+  .buttons {
+    width: "100%";
+  }
+}
+
+@media (max-width: 333px) {
+  .login-btn {
+    width: 120px;
+  }
+
+  .signup-btn {
+    width: 120px;
   }
 
   .buttons {
