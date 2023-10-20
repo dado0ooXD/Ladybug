@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import "./LoginModal.css";
+import "./SignupModal.css";
 import { GlobalContext } from "../../layout/Layout";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -160,7 +160,7 @@ const SignupModal = () => {
                       {errors.password && touched.password && errors.password}
                     </Typography>
                   </Box>
-                  <button className="modal-login">Sign up</button>
+                  <button className="modal-signup">Sign up</button>
                 </Box>
               </Box>
             </form>

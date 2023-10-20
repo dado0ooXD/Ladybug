@@ -5,7 +5,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./LoginModal.css";
 import { GlobalContext } from "../../layout/Layout";
