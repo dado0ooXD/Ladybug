@@ -11,6 +11,11 @@ import "./SignupModal.css";
 import { GlobalContext } from "../../layout/Layout";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { db, userDb } from "../../firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { signInUser } from "../../store/userSlice";
 
 // Login Schema
 const loginSchema = Yup.object().shape({
@@ -49,11 +54,34 @@ const SignupModal = () => {
     boxShadow: 15,
   };
 
+  // Redux
+  const dispatch = useDispatch();
+
   return (
     <Formik
       enableReinitialize
       initialValues={initialState}
-      onSubmit={(values, { resetForm }) => {}}
+      onSubmit={(values, { resetForm }) => {
+        createUserWithEmailAndPassword(
+          userDb,
+          values.email,
+          values.password
+        ).then((userCredential) => {
+          updateProfile(userDb.currentUser, {
+            displayName: values.username,
+          });
+          dispatch(
+            signInUser({
+              username: values.username,
+              email: values.email,
+              uid: userCredential.user.uid,
+            })
+          );
+          console.log(userCredential);
+          resetForm();
+          setOpenSignup(!openSignup);
+        });
+      }}
       validationSchema={loginSchema}
     >
       {({
@@ -160,7 +188,9 @@ const SignupModal = () => {
                       {errors.password && touched.password && errors.password}
                     </Typography>
                   </Box>
-                  <button className="modal-signup">Sign up</button>
+                  <button onClick={handleSubmit} className="modal-signup">
+                    Sign up
+                  </button>
                 </Box>
               </Box>
             </form>

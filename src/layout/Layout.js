@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Suggested from "../components/Suggested/Suggested";
 import LoginModal from "../components/Modals/LoginModal";
 import SignupModal from "../components/Modals/SignupModal";
+import { useSelector } from "react-redux";
 
 //Context
 export const GlobalContext = createContext();
@@ -12,8 +13,12 @@ const Layout = ({ children }) => {
   const isXsScreen = useMediaQuery("(max-width:600px)");
   const isMdScreen = useMediaQuery("(max-width:1200px)");
 
+  // Modal
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
+
+  // Redux
+  const userId = useSelector((state) => state.user.uid);
 
   return (
     <GlobalContext.Provider
@@ -54,53 +59,55 @@ const Layout = ({ children }) => {
             </Grid>
           )}
         </Grid>
-        <Box
-          sx={{
-            height: "80px",
-            backgroundColor: "#fa8072",
-            width: "100%",
-            position: "absolute",
-            bottom: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-          }}
-        >
-          {!isXsScreen && (
-            <Box>
-              <Typography
-                variant="h6"
-                style={{ fontWeight: "bold", color: "white" }}
+        {!userId ? (
+          <Box
+            sx={{
+              height: "80px",
+              backgroundColor: "#fa8072",
+              width: "100%",
+              position: "absolute",
+              bottom: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            {!isXsScreen && (
+              <Box>
+                <Typography
+                  variant="h6"
+                  style={{ fontWeight: "bold", color: "white" }}
+                >
+                  Don't miss out on the buzz.
+                </Typography>
+                <Typography
+                  variant="p"
+                  style={{ fontSize: "16px", color: "white" }}
+                >
+                  People on Busy Bee are always the first to know.
+                </Typography>
+              </Box>
+            )}
+            <div className="buttons">
+              <button
+                className="login-btn"
+                onClick={() => {
+                  setOpen(!open);
+                }}
               >
-                Don't miss out on the buzz.
-              </Typography>
-              <Typography
-                variant="p"
-                style={{ fontSize: "16px", color: "white" }}
+                Log in
+              </button>
+              <button
+                className="signup-btn"
+                onClick={() => {
+                  setOpenSignup(!openSignup);
+                }}
               >
-                People on Busy Bee are always the first to know.
-              </Typography>
-            </Box>
-          )}
-          <div className="buttons">
-            <button
-              className="login-btn"
-              onClick={() => {
-                setOpen(!open);
-              }}
-            >
-              Log in
-            </button>
-            <button
-              className="signup-btn"
-              onClick={() => {
-                setOpenSignup(!openSignup);
-              }}
-            >
-              Sign up
-            </button>
-          </div>
-        </Box>
+                Sign up
+              </button>
+            </div>
+          </Box>
+        ) : null}
         <LoginModal />
         <SignupModal />
       </Box>
