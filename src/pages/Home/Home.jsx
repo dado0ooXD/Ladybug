@@ -10,6 +10,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import "./Home.css";
 import { GlobalContext } from "../../App";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import { allPosts, createLadybug } from "../../firebase";
+import { useEffect } from "react";
 
 const Home = () => {
   // Context
@@ -17,6 +20,15 @@ const Home = () => {
 
   // ID from redux
   const userId = useSelector((state) => state.user.uid);
+  const name = useSelector((state) => state.user.username);
+
+  // Ladybug post
+  const [text, setText] = useState("");
+
+  // Getting posts from database
+  useEffect(() => {
+    allPosts();
+  }, []);
 
   return (
     <Layout>
@@ -26,7 +38,6 @@ const Home = () => {
             height: "60px",
             display: "flex",
             alignItems: "center",
-            // borderBottom: "1px solid rgb(243 244 246)",
           }}
         >
           <Box>
@@ -80,8 +91,11 @@ const Home = () => {
                 background: "transparent",
                 borderBottom: "1px solid rgb(243 244 246)",
                 marginTop: "10px",
+                fontSize: "21px",
               }}
               placeholder="What's happening?!"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             ></textarea>
             <Box
               sx={{
@@ -111,7 +125,12 @@ const Home = () => {
                   if (!userId) {
                     setOpen(!open);
                   } else {
-                    console.log("User je tu!");
+                    createLadybug({
+                      comments: [],
+                      likes: "",
+                      name: name,
+                      text: text,
+                    }).then((posts) => console.log(posts));
                   }
                 }}
                 className="ladybug-btn"
