@@ -8,29 +8,29 @@ import {
 import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./SignupModal.css";
-import { GlobalContext } from "../../layout/Layout";
+import { GlobalContext } from "../../App";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db, userDb } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInUser } from "../../store/userSlice";
 
-// Login Schema
-const loginSchema = Yup.object().shape({
+// Signup Schema
+const signupSchema = Yup.object().shape({
   username: Yup.string()
     .required("Please enter username")
-    .min(2, "Password must have at least 2 characters")
-    .max(30, "Email must have max 30 characters"),
+    .min(2, "Username must have at least 2 characters")
+    .max(30, "Username must have max 30 characters"),
   email: Yup.string()
     .required("Email is required")
     .min(10, "Email must have at least 10 characters")
     .max(30, "Email must have max 30 characters"),
   password: Yup.string()
-    .required("Email is required")
+    .required("Password is required")
     .min(8, "Password must have at least 8 characters")
-    .max(30, "Email must have max 30 characters"),
+    .max(30, "Password must have max 30 characters"),
 });
 
 const SignupModal = () => {
@@ -62,27 +62,26 @@ const SignupModal = () => {
       enableReinitialize
       initialValues={initialState}
       onSubmit={(values, { resetForm }) => {
-        createUserWithEmailAndPassword(
-          userDb,
-          values.email,
-          values.password
-        ).then((userCredential) => {
-          updateProfile(userDb.currentUser, {
-            displayName: values.username,
-          });
-          dispatch(
-            signInUser({
-              username: values.username,
-              email: values.email,
-              uid: userCredential.user.uid,
-            })
-          );
-          console.log(userCredential);
-          resetForm();
-          setOpenSignup(!openSignup);
-        });
+        createUserWithEmailAndPassword(userDb, values.email, values.password)
+          .then((userCredential) => {
+            updateProfile(userDb.currentUser, {
+              displayName: values.username,
+            });
+            dispatch(
+              signInUser({
+                username: values.username,
+                email: values.email,
+                uid: userCredential.user.uid,
+              })
+            );
+            console.log(userCredential);
+
+            resetForm();
+            setOpenSignup(!openSignup);
+          })
+          .catch((error) => alert(error));
       }}
-      validationSchema={loginSchema}
+      validationSchema={signupSchema}
     >
       {({
         values,
@@ -142,7 +141,6 @@ const SignupModal = () => {
                   >
                     <TextField
                       placeholder="Username"
-                      error={errors.username}
                       name="username"
                       value={values.username}
                       onChange={handleChange}
@@ -157,7 +155,6 @@ const SignupModal = () => {
                     </Typography>
                     <TextField
                       placeholder="Email"
-                      error={errors.email}
                       name="email"
                       value={values.email}
                       onChange={handleChange}
@@ -174,7 +171,6 @@ const SignupModal = () => {
                     <TextField
                       sx={{ marginTop: "15px" }}
                       placeholder="Password"
-                      error={errors.password}
                       name="password"
                       value={values.password}
                       onChange={handleChange}
@@ -188,7 +184,11 @@ const SignupModal = () => {
                       {errors.password && touched.password && errors.password}
                     </Typography>
                   </Box>
-                  <button onClick={handleSubmit} className="modal-signup">
+                  <button
+                    type="button"
+                    onClick={handleSubmit}
+                    className="modal-signup"
+                  >
                     Sign up
                   </button>
                 </Box>

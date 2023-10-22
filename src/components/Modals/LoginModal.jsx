@@ -8,9 +8,13 @@ import {
 import React, { useContext } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./LoginModal.css";
-import { GlobalContext } from "../../layout/Layout";
+import { GlobalContext } from "../../App";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { userDb } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { signInUser } from "../../store/userSlice";
 
 // Login Schema
 const loginSchema = Yup.object().shape({
@@ -19,12 +23,15 @@ const loginSchema = Yup.object().shape({
     .min(10, "Email must have at least 10 characters")
     .max(30, "Email must have max 30 characters"),
   password: Yup.string()
-    .required("Email is required")
+    .required("Password is required")
     .min(8, "Password must have at least 8 characters")
-    .max(30, "Email must have max 30 characters"),
+    .max(30, "Password must have max 30 characters"),
 });
 
 const LoginModal = () => {
+  // Redux
+  const dispatch = useDispatch();
+
   // Open Modal
   const { open, setOpen } = useContext(GlobalContext);
   const isXsScreen = useMediaQuery("(max-width:600px)");
@@ -49,7 +56,21 @@ const LoginModal = () => {
     <Formik
       enableReinitialize
       initialValues={initialState}
-      onSubmit={(values, { resetForm }) => {}}
+      onSubmit={(values, { resetForm }) => {
+        signInWithEmailAndPassword(userDb, values.email, values.password).then(
+          (userCredential) => {
+            dispatch(
+              signInUser({
+                username: userCredential.user.displayName,
+                email: userCredential.user.email,
+                uid: userCredential.user.uid,
+              })
+            );
+            console.log(userCredential);
+            setOpen(!open);
+          }
+        );
+      }}
       validationSchema={loginSchema}
     >
       {({
@@ -110,7 +131,6 @@ const LoginModal = () => {
                   >
                     <TextField
                       placeholder="Email"
-                      error={errors.email}
                       name="email"
                       value={values.email}
                       onChange={handleChange}
@@ -126,7 +146,6 @@ const LoginModal = () => {
                     <TextField
                       sx={{ marginTop: "15px" }}
                       placeholder="Password"
-                      error={errors.password}
                       name="password"
                       value={values.password}
                       onChange={handleChange}
@@ -140,7 +159,9 @@ const LoginModal = () => {
                       {errors.password && touched.password && errors.password}
                     </Typography>
                   </Box>
-                  <button className="modal-login">Log in</button>
+                  <button className="modal-login" onClick={handleSubmit}>
+                    Log in
+                  </button>
                 </Box>
               </Box>
             </form>

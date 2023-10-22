@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import Layout from "../../layout/Layout";
 import ladybug from "../../assets/ladybug.png";
 import CollectionsIcon from "@mui/icons-material/Collections";
@@ -8,8 +8,16 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import "./Home.css";
+import { GlobalContext } from "../../App";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  // Context
+  const { open, setOpen } = useContext(GlobalContext);
+
+  // ID from redux
+  const userId = useSelector((state) => state.user.uid);
+
   return (
     <Layout>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -98,7 +106,18 @@ const Home = () => {
                   style={{ color: " #FA8072", marginLeft: "5px", fontSize: 23 }}
                 />
               </Box>
-              <button className="ladybug-btn">Ladybug</button>
+              <button
+                onClick={() => {
+                  if (!userId) {
+                    setOpen(!open);
+                  } else {
+                    console.log("User je tu!");
+                  }
+                }}
+                className="ladybug-btn"
+              >
+                Ladybug
+              </button>
             </Box>
           </Box>
         </Box>
