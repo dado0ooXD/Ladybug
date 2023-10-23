@@ -6,6 +6,7 @@ import LoginModal from "../components/Modals/LoginModal";
 import SignupModal from "../components/Modals/SignupModal";
 import { useSelector } from "react-redux";
 import { GlobalContext } from "../App";
+import CommentsModal from "../components/Modals/CommentsModal";
 
 const Layout = ({ children }) => {
   const isXsScreen = useMediaQuery("(max-width:600px)");
@@ -112,6 +113,7 @@ const Layout = ({ children }) => {
       ) : null}
       <LoginModal />
       <SignupModal />
+      <CommentsModal />
     </Grid>
 
     // </Box>

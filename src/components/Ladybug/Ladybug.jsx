@@ -5,8 +5,16 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
+import { useContext } from "react";
+import { GlobalContext } from "../../App";
+import { useSelector } from "react-redux";
 
 const Ladybug = ({ text, name }) => {
+  /// Context
+  const { openComments, setOpenComments, setOpen, open } =
+    useContext(GlobalContext);
+  const userId = useSelector((state) => state.user.uid);
+
   return (
     <Box
       sx={{
@@ -64,12 +72,19 @@ const Ladybug = ({ text, name }) => {
       >
         <SmsOutlinedIcon
           sx={{ marginLeft: "30px", fontSize: "20px", cursor: "pointer" }}
+          onClick={() => {
+            if (userId) {
+              setOpenComments(!openComments);
+            } else {
+              setOpen(!open);
+            }
+          }}
         />
         <FavoriteBorderIcon
-          sx={{ marginLeft: "60px", fontSize: "20px", cursor: "pointer" }}
+          sx={{ marginLeft: "55px", fontSize: "20px", cursor: "pointer" }}
         />
-        <SignalCellularAltIcon sx={{ marginLeft: "60px", fontSize: "20px" }} />
-        <IosShareIcon sx={{ marginLeft: "60px", fontSize: "20px" }} />
+        <SignalCellularAltIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
+        <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
       </Box>
     </Box>
   );

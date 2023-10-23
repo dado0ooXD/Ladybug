@@ -14,6 +14,7 @@ import { useState } from "react";
 import { allPosts, createLadybug } from "../../firebase";
 import { useEffect } from "react";
 import Ladybug from "../../components/Ladybug/Ladybug";
+import { serverTimestamp } from "firebase/firestore";
 
 const Home = () => {
   // Context
@@ -37,6 +38,7 @@ const Home = () => {
         likes: "",
         name: name,
         text: text,
+        createdAt: serverTimestamp(),
       });
     }
     setText("");
@@ -44,7 +46,9 @@ const Home = () => {
 
   // Getting posts from database
   useEffect(() => {
-    allPosts().then((data) => setPosts(data));
+    allPosts()
+      .then((data) => setPosts(data))
+      .catch((error) => console.log("error ===>", error));
   }, []);
 
   return (

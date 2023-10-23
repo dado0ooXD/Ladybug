@@ -66,7 +66,7 @@ const LoginModal = () => {
                 uid: userCredential.user.uid,
               })
             );
-            console.log(userCredential);
+            // console.log(userCredential);
             setOpen(!open);
           }
         );
@@ -159,7 +159,11 @@ const LoginModal = () => {
                       {errors.password && touched.password && errors.password}
                     </Typography>
                   </Box>
-                  <button className="modal-login" onClick={handleSubmit}>
+                  <button
+                    type="button"
+                    className="modal-login"
+                    onClick={handleSubmit}
+                  >
                     Log in
                   </button>
                 </Box>

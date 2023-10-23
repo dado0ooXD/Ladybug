@@ -8,10 +8,18 @@ function App() {
   // Modal
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
+  const [openComments, setOpenComments] = useState(false);
 
   return (
     <GlobalContext.Provider
-      value={{ open, setOpen, openSignup, setOpenSignup }}
+      value={{
+        open,
+        setOpen,
+        openSignup,
+        setOpenSignup,
+        openComments,
+        setOpenComments,
+      }}
     >
       {" "}
       <BrowserRouter>
