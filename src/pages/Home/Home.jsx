@@ -46,9 +46,12 @@ const Home = () => {
 
   // Getting posts from database
   useEffect(() => {
-    allPosts()
-      .then((data) => setPosts(data))
-      .catch((error) => console.log("error ===>", error));
+    const renderPosts = async () => {
+      await allPosts()
+        .then((data) => setPosts(data))
+        .catch((error) => console.log("error ===>", error));
+    };
+    renderPosts();
   }, []);
 
   return (

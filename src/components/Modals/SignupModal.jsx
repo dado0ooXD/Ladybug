@@ -12,9 +12,9 @@ import { GlobalContext } from "../../App";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { db, userDb } from "../../firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { useDispatch, useSelector } from "react-redux";
+import { userDb } from "../../firebase";
+
+import { useDispatch } from "react-redux";
 import { signInUser } from "../../store/userSlice";
 
 // Signup Schema

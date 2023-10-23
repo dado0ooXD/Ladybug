@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -14,18 +21,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const userDb = getAuth(app);
-const posts = collection(db, "posts");
+const postCollection = collection(db, "posts");
+const sorted = query(postCollection, orderBy("createdAt", "desc"));
 
 // All posts
 
 export const allPosts = async () => {
-  const res = await getDocs(posts);
-  const ladybugs = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  console.log(ladybugs);
-  return ladybugs;
+  const res = await getDocs(sorted)
+    .then((res) => res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    .catch((error) => console.log("This is error ===>", error));
+  console.log(res);
+  return res;
 };
 
 // Add ladybug
 export const createLadybug = async (data) => {
-  await addDoc(posts, data);
+  await addDoc(postCollection, data);
 };
