@@ -16,6 +16,7 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
+        height: "100vh",
         width: "260px",
         display: "flex",
         justifyContent: "space-between",
@@ -41,26 +42,29 @@ const Sidebar = () => {
         </div>
         <button className="ladybug">Ladybug</button>
       </Box>
-      <Box
-        sx={{
-          paddingLeft: "30px",
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "40px",
-        }}
-      >
-        <img
-          src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
-          alt="user-img"
-          className="user-img"
-        />
-        {!isMdScreen && (
-          <Box sx={{ marginLeft: "7px" }}>
-            <p className="user-name">{user?.username}</p>
-            <p className="user-tag">@{user?.username?.toLowerCase()}</p>
-          </Box>
-        )}
-      </Box>
+      {user.uid ? (
+        <Box
+          sx={{
+            paddingLeft: "35px",
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "60px",
+            cursor: "pointer",
+          }}
+        >
+          <img
+            src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
+            alt="user-img"
+            className="user-img"
+          />
+          {!isMdScreen ? (
+            <Box sx={{ marginLeft: "7px" }}>
+              <p className="user-name">{user?.username}</p>
+              <p className="user-tag">@{user?.username?.toLowerCase()}</p>
+            </Box>
+          ) : null}
+        </Box>
+      ) : null}
     </Box>
   );
 };

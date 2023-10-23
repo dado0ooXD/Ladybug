@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import { allPosts, createLadybug } from "../../firebase";
 import { useEffect } from "react";
+import Ladybug from "../../components/Ladybug/Ladybug";
 
 const Home = () => {
   // Context
@@ -24,15 +25,36 @@ const Home = () => {
 
   // Ladybug post
   const [text, setText] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  // Create ladybug post
+  const createLadybugPost = () => {
+    if (!userId) {
+      setOpen(!open);
+    } else {
+      createLadybug({
+        comments: [],
+        likes: "",
+        name: name,
+        text: text,
+      });
+    }
+    setText("");
+  };
 
   // Getting posts from database
   useEffect(() => {
-    allPosts();
+    allPosts().then((data) => setPosts(data));
   }, []);
 
   return (
     <Layout>
-      <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Box
           sx={{
             height: "60px",
@@ -120,25 +142,16 @@ const Home = () => {
                   style={{ color: " #FA8072", marginLeft: "5px", fontSize: 23 }}
                 />
               </Box>
-              <button
-                onClick={() => {
-                  if (!userId) {
-                    setOpen(!open);
-                  } else {
-                    createLadybug({
-                      comments: [],
-                      likes: "",
-                      name: name,
-                      text: text,
-                    }).then((posts) => console.log(posts));
-                  }
-                }}
-                className="ladybug-btn"
-              >
+              <button onClick={createLadybugPost} className="ladybug-btn">
                 Ladybug
               </button>
             </Box>
           </Box>
+        </Box>
+        <Box>
+          {posts.map((item) => (
+            <Ladybug key={item.id} {...item} />
+          ))}
         </Box>
       </Box>
     </Layout>

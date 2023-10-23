@@ -19,48 +19,55 @@ const Layout = ({ children }) => {
   const userId = useSelector((state) => state.user.uid);
 
   return (
-    <Box sx={{ height: "100vh", position: "relative" }}>
-      <Grid container sx={{ display: "flex", justifyContent: "center" }}>
-        {!isXsScreen && (
-          <Grid
-            item
-            xl={3.5}
-            lg={3.5}
-            md={3}
-            sm={1}
-            xs={0}
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <Sidebar />
-          </Grid>
-        )}
+    // <Box sx={{ position: "relative" }}>
+    <Grid
+      container
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        position: "relative",
+      }}
+    >
+      {!isXsScreen && (
         <Grid
           item
-          xl={5}
-          lg={5}
-          md={9}
-          sm={11}
-          xs={12}
-          style={{ height: "100vh", border: "1px solid rgb(243 244 246)" }}
+          xl={3.5}
+          lg={3.5}
+          md={3}
+          sm={1}
+          xs={0}
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
         >
-          {children}
+          <Sidebar />
         </Grid>
-        {!isMdScreen && (
-          <Grid item xl={3.5} lg={3.5} md={4} sm={4} xs={0}>
-            <Suggested />
-          </Grid>
-        )}
+      )}
+      <Grid
+        item
+        xl={5}
+        lg={5}
+        md={9}
+        sm={11}
+        xs={12}
+        style={{ border: "1px solid rgb(243 244 246)" }}
+      >
+        {children}
       </Grid>
+      {!isMdScreen && (
+        <Grid item xl={3.5} lg={3.5} md={4} sm={4} xs={0}>
+          <Suggested />
+        </Grid>
+      )}
       {!userId ? (
         <Box
           sx={{
             height: "80px",
             backgroundColor: "#fa8072",
             width: "100%",
-            position: "absolute",
+            position: "fixed",
             bottom: 0,
             display: "flex",
             alignItems: "center",
@@ -105,7 +112,9 @@ const Layout = ({ children }) => {
       ) : null}
       <LoginModal />
       <SignupModal />
-    </Box>
+    </Grid>
+
+    // </Box>
   );
 };
 
