@@ -11,10 +11,16 @@ import "./Home.css";
 import { GlobalContext } from "../../App";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import { allPosts, createLadybug } from "../../firebase";
+import { allPosts, createLadybug, db } from "../../firebase";
 import { useEffect } from "react";
 import Ladybug from "../../components/Ladybug/Ladybug";
-import { serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const Home = () => {
   // Context
@@ -45,12 +51,24 @@ const Home = () => {
   };
 
   // Getting posts from database
+  const postCollection = collection(db, "posts");
   useEffect(() => {
     const renderPosts = async () => {
-      await allPosts()
-        .then((data) => setPosts(data))
-        .catch((error) => console.log("error ===>", error));
+      // await allPosts()
+      //   .then((data) => setPosts(data))
+      //   .catch((error) => console.log("error ===>", error));
+
+      const sortedCollection = query(
+        postCollection,
+        orderBy("createdAt", "desc")
+      );
+      const posts = await onSnapshot(sortedCollection, (snapshot) => {
+        // console.log(snapshot.docs[0].id);
+        setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      });
+      return posts;
     };
+
     renderPosts();
   }, []);
 
@@ -156,7 +174,7 @@ const Home = () => {
           </Box>
         </Box>
         <Box>
-          {posts.map((item) => (
+          {posts?.map((item) => (
             <Ladybug key={item.id} {...item} />
           ))}
         </Box>
