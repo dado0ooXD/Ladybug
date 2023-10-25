@@ -11,7 +11,7 @@ import "./Home.css";
 import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { allPosts, createLadybug, db } from "../../firebase";
+import { createLadybug, db } from "../../firebase";
 import { useEffect } from "react";
 import Ladybug from "../../components/Ladybug/Ladybug";
 import {
@@ -40,19 +40,21 @@ const Home = () => {
 
   // Create ladybug post
   const createLadybugPost = () => {
-    if (!userId) {
-      setOpen(!open);
-    } else {
-      createLadybug({
-        comments: [],
-        likes: "",
-        name: name,
-        text: text,
-        createdAt: serverTimestamp(),
-      });
-      dispatch(addComment({ text }));
+    if (text !== "") {
+      if (!userId) {
+        setOpen(!open);
+      } else {
+        createLadybug({
+          comments: [],
+          likes: "",
+          name: name,
+          text: text,
+          createdAt: serverTimestamp(),
+        });
+        dispatch(addComment({ text }));
+      }
+      setText("");
     }
-    setText("");
   };
 
   // Getting posts from database
@@ -60,18 +62,14 @@ const Home = () => {
 
   useEffect(() => {
     const renderPosts = async () => {
-      // await allPosts()
-      //   .then((data) => setPosts(data))
-      //   .catch((error) => console.log("error ===>", error));
-
       const sortedCollection = query(
         postCollection,
         orderBy("createdAt", "desc")
       );
       const ladyBugs = await onSnapshot(sortedCollection, (snapshot) => {
-        // console.log(snapshot.docs[0].id);
         setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       });
+
       return ladyBugs;
     };
 

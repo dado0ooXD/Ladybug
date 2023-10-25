@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 import "./Ladybug.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -12,7 +11,7 @@ import { addComment, addText, addUserComment } from "../../store/commentSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-const Ladybug = ({ text, name, id }) => {
+const Ladybug = ({ text, name, id, comments }) => {
   /// Context
   const { openComments, setOpenComments, setOpen, open } =
     useContext(GlobalContext);
@@ -23,12 +22,13 @@ const Ladybug = ({ text, name, id }) => {
   const commentId = useSelector((state) => state.comments.comment.postId);
 
   // Text
-
   const getTextAndUser = async () => {
     const commentRef = doc(db, "posts", id);
     const commentSnap = await getDoc(commentRef);
     const commentText = await commentSnap.data().text;
     const userComment = await commentSnap.data().name;
+
+    // Adding text and comment to redux
     dispatch(addText({ commentText }));
     dispatch(addUserComment({ userComment }));
   };
@@ -101,6 +101,18 @@ const Ladybug = ({ text, name, id }) => {
             }
           }}
         />
+        {comments.length > 0 && (
+          <span
+            style={{
+              fontSize: "12px",
+              marginBottom: "3px",
+              marginLeft: "5px",
+              fontWeight: "bold",
+            }}
+          >
+            {comments.length}
+          </span>
+        )}
         <FavoriteBorderIcon
           sx={{ marginLeft: "55px", fontSize: "20px", cursor: "pointer" }}
         />

@@ -1,15 +1,9 @@
-import {
-  Box,
-  Modal,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Modal, useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
 import "./CommentsModal.css";
-import { doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 import CloseIcon from "@mui/icons-material/Close";
@@ -87,7 +81,7 @@ const CommentsModal = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: "73%",
+            height: !isXsScreen ? "73%" : "40%",
             justifyContent: "center",
             alignItems: "center",
           }}
