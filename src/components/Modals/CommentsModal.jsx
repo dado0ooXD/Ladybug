@@ -33,6 +33,7 @@ const CommentsModal = () => {
   const commentId = useSelector((state) => state.comments.comment.postId);
   const name = useSelector((state) => state.user.username);
   const commentText = useSelector((state) => state.comments.text.commentText);
+  const commentName = useSelector((state) => state.comments.userComment.user);
 
   // Modal Style
   const style = {
@@ -47,14 +48,16 @@ const CommentsModal = () => {
     boxShadow: 15,
   };
 
+  // Adding comment function
   const addComment = async () => {
     const commentRef = doc(db, "posts", commentId);
     const commentSnap = await getDoc(commentRef);
     const prevItems = await commentSnap.data();
 
+    // Comment
     const postComments = await commentSnap.data().comments;
-    // const postText = await commentSnap.data().text;
 
+    // Adding comment to firebase
     await updateDoc(commentRef, {
       ...prevItems,
       comments: [...postComments, { name: name, text: comment }],
@@ -64,7 +67,6 @@ const CommentsModal = () => {
     setOpenComments(!openComments);
   };
 
-  // const createComment = () => {};
   return (
     <Modal
       open={openComments}
@@ -75,12 +77,6 @@ const CommentsModal = () => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {/* <TextField
-          type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <button onClick={() => addComment()}>Submit</button> */}
         <CloseIcon
           onClick={() => {
             setOpenComments(!openComments);
@@ -112,14 +108,12 @@ const CommentsModal = () => {
             <Box sx={{ marginLeft: "20px" }}>
               <Box>
                 <Box>
-                  <span style={{ fontWeight: "bold" }}>davudxD</span>{" "}
-                  <span style={{ fontSize: "14px" }}>@davudxD</span>
+                  <span style={{ fontWeight: "bold" }}>{commentName}</span>{" "}
+                  <span style={{ fontSize: "14px" }}>@{commentName}</span>
                 </Box>
               </Box>
               <Box sx={{ marginTop: "5px" }}>
-                <span style={{ fontSize: "14px" }}>
-                  Ovo je tekst mog posta na koji komentarises
-                </span>
+                <span style={{ fontSize: "14px" }}>{commentText}</span>
               </Box>
             </Box>
           </Box>

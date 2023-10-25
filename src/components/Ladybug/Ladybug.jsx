@@ -8,7 +8,9 @@ import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../../store/commentSlice";
+import { addComment, addText, addUserComment } from "../../store/commentSlice";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Ladybug = ({ text, name, id }) => {
   /// Context
@@ -19,6 +21,17 @@ const Ladybug = ({ text, name, id }) => {
   const userId = useSelector((state) => state.user.uid);
   const dispatch = useDispatch();
   const commentId = useSelector((state) => state.comments.comment.postId);
+
+  // Text
+
+  const getTextAndUser = async () => {
+    const commentRef = doc(db, "posts", id);
+    const commentSnap = await getDoc(commentRef);
+    const commentText = await commentSnap.data().text;
+    const userComment = await commentSnap.data().name;
+    dispatch(addText({ commentText }));
+    dispatch(addUserComment({ userComment }));
+  };
 
   return (
     <Box
@@ -79,6 +92,7 @@ const Ladybug = ({ text, name, id }) => {
           sx={{ marginLeft: "30px", fontSize: "20px", cursor: "pointer" }}
           onClick={() => {
             if (userId) {
+              getTextAndUser();
               dispatch(addComment({ id }));
               setOpenComments(!openComments);
               console.log(commentId);
