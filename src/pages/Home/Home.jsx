@@ -9,7 +9,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import "./Home.css";
 import { GlobalContext } from "../../App";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { allPosts, createLadybug, db } from "../../firebase";
 import { useEffect } from "react";
@@ -21,10 +21,14 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
+import { addComment } from "../../store/commentSlice";
 
 const Home = () => {
   // Context
   const { open, setOpen } = useContext(GlobalContext);
+
+  // Redux
+  const dispatch = useDispatch();
 
   // ID from redux
   const userId = useSelector((state) => state.user.uid);
@@ -46,12 +50,14 @@ const Home = () => {
         text: text,
         createdAt: serverTimestamp(),
       });
+      dispatch(addComment({ text }));
     }
     setText("");
   };
 
   // Getting posts from database
   const postCollection = collection(db, "posts");
+
   useEffect(() => {
     const renderPosts = async () => {
       // await allPosts()
@@ -62,11 +68,11 @@ const Home = () => {
         postCollection,
         orderBy("createdAt", "desc")
       );
-      const posts = await onSnapshot(sortedCollection, (snapshot) => {
+      const ladyBugs = await onSnapshot(sortedCollection, (snapshot) => {
         // console.log(snapshot.docs[0].id);
         setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       });
-      return posts;
+      return ladyBugs;
     };
 
     renderPosts();

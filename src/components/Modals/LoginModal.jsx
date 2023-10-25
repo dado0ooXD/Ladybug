@@ -57,8 +57,8 @@ const LoginModal = () => {
       enableReinitialize
       initialValues={initialState}
       onSubmit={(values, { resetForm }) => {
-        signInWithEmailAndPassword(userDb, values.email, values.password).then(
-          (userCredential) => {
+        signInWithEmailAndPassword(userDb, values.email, values.password)
+          .then((userCredential) => {
             dispatch(
               signInUser({
                 username: userCredential.user.displayName,
@@ -68,8 +68,8 @@ const LoginModal = () => {
             );
             // console.log(userCredential);
             setOpen(!open);
-          }
-        );
+          })
+          .catch((error) => alert(error));
       }}
       validationSchema={loginSchema}
     >

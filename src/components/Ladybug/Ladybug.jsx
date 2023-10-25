@@ -7,13 +7,18 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addComment } from "../../store/commentSlice";
 
-const Ladybug = ({ text, name }) => {
+const Ladybug = ({ text, name, id }) => {
   /// Context
   const { openComments, setOpenComments, setOpen, open } =
     useContext(GlobalContext);
+
+  // Redux
   const userId = useSelector((state) => state.user.uid);
+  const dispatch = useDispatch();
+  const commentId = useSelector((state) => state.comments.comment.postId);
 
   return (
     <Box
@@ -74,7 +79,9 @@ const Ladybug = ({ text, name }) => {
           sx={{ marginLeft: "30px", fontSize: "20px", cursor: "pointer" }}
           onClick={() => {
             if (userId) {
+              dispatch(addComment({ id }));
               setOpenComments(!openComments);
+              console.log(commentId);
             } else {
               setOpen(!open);
             }
