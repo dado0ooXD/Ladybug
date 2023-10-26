@@ -10,8 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComment, addText, addUserComment } from "../../store/commentSlice";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const Ladybug = ({ text, name, id, comments }) => {
+  // Navigate
+  const navigate = useNavigate();
+
   /// Context
   const { openComments, setOpenComments, setOpen, open } =
     useContext(GlobalContext);
@@ -43,7 +47,12 @@ const Ladybug = ({ text, name, id, comments }) => {
         padding: "10px",
       }}
     >
-      <Box sx={{ flex: 3, display: "flex" }}>
+      <Box
+        onClick={() => {
+          navigate(`/${id}`);
+        }}
+        sx={{ flex: 3, display: "flex", cursor: "pointer" }}
+      >
         <Box>
           {" "}
           <img
