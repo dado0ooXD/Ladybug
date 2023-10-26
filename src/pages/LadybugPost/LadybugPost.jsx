@@ -5,12 +5,17 @@ import { Box, Typography } from "@mui/material";
 import WestIcon from "@mui/icons-material/West";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CommentCard from "../../components/CommentCard/CommentCard";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import IosShareIcon from "@mui/icons-material/IosShare";
+import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 
 const LadybugPost = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [comments, setComments] = useState([]);
 
   // Getting comments
@@ -43,6 +48,9 @@ const LadybugPost = () => {
         >
           <WestIcon
             sx={{ fontSize: "25px", padding: "0 10px", cursor: "pointer" }}
+            onClick={() => {
+              navigate("/");
+            }}
           />
           <Typography
             variant="h6"
@@ -76,16 +84,24 @@ const LadybugPost = () => {
                 src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
                 alt="user-img"
                 className="user-img-post"
+                style={{ padding: "3px" }}
               />
               <Box sx={{ marginLeft: "10px" }}>
-                <span style={{ fontWeight: "bold" }}>{comments.name}</span>{" "}
+                <span style={{ fontWeight: "bold", fontSize: "15px" }}>
+                  {comments.name}
+                </span>{" "}
                 <br />
-                <span style={{ fontSize: "14px" }}>@{comments.name}</span>
+                <span style={{ fontSize: "13px", color: "gray" }}>
+                  @{comments.name}
+                </span>
               </Box>
             </Box>
             <MoreHorizIcon sx={{ marginRight: "10px" }} />
           </Box>
-          <Typography variant="p" sx={{ marginLeft: "65px" }}>
+          <Typography
+            variant="p"
+            sx={{ marginLeft: "65px", paddingBottom: "10px", fontSize: "14px" }}
+          >
             {comments.text}
           </Typography>
         </Box>
@@ -95,17 +111,32 @@ const LadybugPost = () => {
             height: "40px",
             display: "flex",
             alignItems: "center",
+            borderBottom: "1px solid rgb(243 244 246)",
           }}
         >
           <Typography variant="p">
             <span style={{ fontWeight: "bold", marginLeft: "10px" }}>
-              {comments.likes.length}
+              {comments?.likes?.length}
             </span>{" "}
             Likes
           </Typography>
         </Box>
 
-        <Box sx={{ height: "40px", backgroundColor: "gray" }}></Box>
+        <Box
+          sx={{
+            height: "40px",
+            padding: "5px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            borderBottom: "1px solid rgb(243 244 246)",
+          }}
+        >
+          <SmsOutlinedIcon sx={{ color: "gray" }} />
+          <FavoriteBorderIcon sx={{ color: "gray" }} />
+          <SignalCellularAltIcon sx={{ color: "gray" }} />
+          <IosShareIcon sx={{ color: "gray" }} />
+        </Box>
 
         {comments?.comments?.map((item, index) => (
           <CommentCard key={index} {...item} />

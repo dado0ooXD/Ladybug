@@ -56,7 +56,7 @@ const CommentsModal = () => {
       ...prevItems,
       comments: [...postComments, { name: name, text: comment }],
     });
-    console.log(commentText);
+    // console.log(commentText);
     setComment("");
     setOpenComments(!openComments);
   };
@@ -125,15 +125,17 @@ const CommentsModal = () => {
               />
               <textarea
                 style={{
+                  width: "100%",
+
                   marginLeft: "20px",
                   outline: "none",
                   resize: "none",
-                  height: "40px",
+
                   border: "none",
                   background: "transparent",
                   borderBottom: "1px solid rgb(243 244 246)",
                   marginTop: "10px",
-                  fontSize: "21px",
+                  fontSize: "19px",
                 }}
                 placeholder="Send your reply"
                 value={comment}
