@@ -46,7 +46,7 @@ const Home = () => {
       } else {
         createLadybug({
           comments: [],
-          likes: "",
+          likes: [],
           name: name,
           text: text,
           createdAt: serverTimestamp(),
@@ -72,7 +72,6 @@ const Home = () => {
 
       return ladyBugs;
     };
-
     renderPosts();
   }, []);
 

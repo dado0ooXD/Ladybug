@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import "./Ladybug.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
@@ -8,11 +9,11 @@ import { useContext } from "react";
 import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, addText, addUserComment } from "../../store/commentSlice";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
-const Ladybug = ({ text, name, id, comments }) => {
+const Ladybug = ({ text, name, id, comments, likes }) => {
   // Navigate
   const navigate = useNavigate();
 
@@ -22,8 +23,9 @@ const Ladybug = ({ text, name, id, comments }) => {
 
   // Redux
   const userId = useSelector((state) => state.user.uid);
-  const dispatch = useDispatch();
   const commentId = useSelector((state) => state.comments.comment.postId);
+  const username = useSelector((state) => state.user.username);
+  const dispatch = useDispatch();
 
   // Text
   const getTextAndUser = async () => {
@@ -35,6 +37,32 @@ const Ladybug = ({ text, name, id, comments }) => {
     // Adding text and comment to redux
     dispatch(addText({ commentText }));
     dispatch(addUserComment({ userComment }));
+  };
+
+  // Like post
+  const likeLadybug = async () => {
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+    const likes = docSnap.data().likes;
+    console.log(likes);
+
+    // Is post liked
+
+    await updateDoc(docRef, {
+      likes: [...likes, username],
+    });
+    console.log("else ===>", likes);
+  };
+
+  const unlikeLadybug = async () => {
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+    const likes = docSnap.data().likes;
+    if (likes.includes(username)) {
+      await updateDoc(docRef, {
+        likes: likes.filter((item) => item !== username),
+      });
+    }
   };
 
   return (
@@ -122,9 +150,46 @@ const Ladybug = ({ text, name, id, comments }) => {
             {comments.length}
           </span>
         )}
-        <FavoriteBorderIcon
-          sx={{ marginLeft: "55px", fontSize: "20px", cursor: "pointer" }}
-        />
+        {likes.includes(username) ? (
+          <FavoriteIcon
+            style={{
+              color: "#fa8072",
+              marginLeft: "55px",
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              unlikeLadybug();
+            }}
+          />
+        ) : (
+          <FavoriteBorderIcon
+            sx={{
+              marginLeft: "55px",
+              fontSize: "20px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              if (userId) {
+                likeLadybug();
+              } else {
+                setOpen(!open);
+              }
+            }}
+          />
+        )}
+        {likes.length > 0 && (
+          <span
+            style={{
+              fontSize: "12px",
+              marginBottom: "3px",
+              marginLeft: "5px",
+              fontWeight: "bold",
+            }}
+          >
+            {likes.length}
+          </span>
+        )}
         <SignalCellularAltIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
         <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
       </Box>

@@ -52,13 +52,16 @@ const CommentsModal = () => {
     const postComments = await commentSnap.data().comments;
 
     // Adding comment to firebase
-    await updateDoc(commentRef, {
-      ...prevItems,
-      comments: [...postComments, { name: name, text: comment }],
-    });
+    if (comment !== "") {
+      await updateDoc(commentRef, {
+        ...prevItems,
+        comments: [...postComments, { name: name, text: comment }],
+      });
+      setOpenComments(!openComments);
+    }
+
     // console.log(commentText);
     setComment("");
-    setOpenComments(!openComments);
   };
 
   return (
