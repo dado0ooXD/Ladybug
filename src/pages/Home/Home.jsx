@@ -81,6 +81,7 @@ const Home = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
+          position: "relative",
         }}
       >
         <Box

@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import ladybug from "../../assets/ladybug.png";
 import { Box, useMediaQuery } from "@mui/material";
 import "./Sidebar.css";
 import { sidebarButtons } from "../../utils/sidebarButtons";
 import SidebarButton from "../SidebarButton/SidebarButton";
 import { useSelector } from "react-redux";
+import { GlobalContext } from "../../App";
+
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 const Sidebar = () => {
+  // Context
+  const { loggingOut, setLogOut } = useContext(GlobalContext);
+
   // Responsiveness
   const isMdScreen = useMediaQuery("(max-width:900px)");
 
@@ -45,24 +51,35 @@ const Sidebar = () => {
       {user.uid ? (
         <Box
           sx={{
-            paddingLeft: "35px",
             display: "flex",
             alignItems: "center",
-            marginBottom: "60px",
+            marginBottom: "80px",
             cursor: "pointer",
+            position: "relative",
+            flexDirection: "column",
+            paddingRight: !isMdScreen ? "30px" : 0,
+          }}
+          onClick={() => {
+            setLogOut(!loggingOut);
           }}
         >
-          <img
-            src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
-            alt="user-img"
-            className="user-img"
-          />
-          {!isMdScreen ? (
-            <Box sx={{ marginLeft: "7px" }}>
-              <p className="user-name">{user?.username}</p>
-              <p className="user-tag">@{user?.username?.toLowerCase()}</p>
+          <LogoutButton>
+            {" "}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              {" "}
+              <img
+                src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
+                alt="user-img"
+                className="user-img"
+              />
+              {!isMdScreen ? (
+                <Box sx={{ marginLeft: "7px" }}>
+                  <p className="user-name">{user?.username}</p>
+                  <p className="user-tag">@{user?.username?.toLowerCase()}</p>
+                </Box>
+              ) : null}
             </Box>
-          ) : null}
+          </LogoutButton>
         </Box>
       ) : null}
     </Box>

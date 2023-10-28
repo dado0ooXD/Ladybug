@@ -10,6 +10,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
   const [openComments, setOpenComments] = useState(false);
+  const [loggingOut, setLogOut] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -20,6 +21,8 @@ function App() {
         setOpenSignup,
         openComments,
         setOpenComments,
+        loggingOut,
+        setLogOut,
       }}
     >
       {" "}

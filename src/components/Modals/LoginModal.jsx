@@ -70,6 +70,7 @@ const LoginModal = () => {
             setOpen(!open);
           })
           .catch((error) => alert(error));
+        resetForm();
       }}
       validationSchema={loginSchema}
     >

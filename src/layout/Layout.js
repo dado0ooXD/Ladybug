@@ -10,7 +10,7 @@ import CommentsModal from "../components/Modals/CommentsModal";
 
 const Layout = ({ children }) => {
   const isXsScreen = useMediaQuery("(max-width:600px)");
-  const isMdScreen = useMediaQuery("(max-width:1200px)");
+  const isMdScreen = useMediaQuery("(max-width:1199px)");
 
   // Context
   const { open, setOpen, openSignup, setOpenSignup } =
@@ -87,7 +87,7 @@ const Layout = ({ children }) => {
                 variant="p"
                 style={{ fontSize: "16px", color: "white" }}
               >
-                People on Busy Bee are always the first to know.
+                People on Ladybug are always the first to know.
               </Typography>
             </Box>
           )}
