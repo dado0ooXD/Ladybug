@@ -68,6 +68,7 @@ const Home = () => {
       );
       const ladyBugs = await onSnapshot(sortedCollection, (snapshot) => {
         setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+        // console.log(posts, "Hi")
       });
 
       return ladyBugs;
