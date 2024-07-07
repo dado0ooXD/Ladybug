@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./pages/Home/Home";
 import { createContext, useState } from "react";
 import LadybugPost from "./pages/LadybugPost/LadybugPost";
+import Bookmarks from "./pages/Bookmarks/Bookmarks";
 
 export const GlobalContext = createContext();
 function App() {
@@ -25,11 +26,11 @@ function App() {
         setLogOut,
       }}
     >
-      {" "}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:id" element={<LadybugPost />} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
         </Routes>
       </BrowserRouter>
     </GlobalContext.Provider>

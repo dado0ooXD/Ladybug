@@ -2,7 +2,8 @@ import { Box, Typography } from "@mui/material";
 import "./Ladybug.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { useContext } from "react";
@@ -10,7 +11,7 @@ import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, addText, addUserComment } from "../../store/commentSlice";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { addToBookmarks, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 const Ladybug = ({ text, name, id, comments, likes }) => {
@@ -150,7 +151,7 @@ const Ladybug = ({ text, name, id, comments, likes }) => {
             {comments.length}
           </span>
         )}
-        {likes.includes(username) ? (
+        { likes.includes(username) ? (
           <FavoriteIcon
             style={{
               color: "#fa8072",
@@ -190,7 +191,9 @@ const Ladybug = ({ text, name, id, comments, likes }) => {
             {likes.length}
           </span>
         )}
-        <SignalCellularAltIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
+        <BookmarkBorderIcon sx={{ marginLeft: "55px", fontSize: "20px" }} onClick={() => {
+          addToBookmarks({name, text, id, comments, likes})
+        }} />
         <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
       </Box>
     </Box>

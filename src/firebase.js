@@ -22,6 +22,8 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const userDb = getAuth(app);
 const postCollection = collection(db, "posts");
+const bookmarksCollection = collection(db, "bookmarks");
+
 // const sorted = query(postCollection, orderBy("createdAt", "desc"));
 
 // All posts
@@ -37,4 +39,9 @@ const postCollection = collection(db, "posts");
 // Add ladybug
 export const createLadybug = async (data) => {
   await addDoc(postCollection, data);
+};
+
+// Add to favorites
+export const addToBookmarks = async (data) => {
+  await addDoc(bookmarksCollection, data);
 };
