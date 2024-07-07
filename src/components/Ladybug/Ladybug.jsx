@@ -13,8 +13,9 @@ import { addComment, addText, addUserComment } from "../../store/commentSlice";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { addToBookmarks, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import {convertTimestamp} from '../../utils/date';
 
-const Ladybug = ({ text, name, id, comments, likes }) => {
+const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
   // Navigate
   const navigate = useNavigate();
 
@@ -48,7 +49,6 @@ const Ladybug = ({ text, name, id, comments, likes }) => {
     console.log(likes);
 
     // Is post liked
-
     await updateDoc(docRef, {
       likes: [...likes, username],
     });
@@ -65,6 +65,7 @@ const Ladybug = ({ text, name, id, comments, likes }) => {
       });
     }
   };
+
 
   return (
     <Box
@@ -111,7 +112,7 @@ const Ladybug = ({ text, name, id, comments, likes }) => {
             >
               @{name}
             </Typography>
-            <Typography variant="p" sx={{ fontSize: "12px" }}></Typography>
+            <Typography variant="p" sx={{ fontSize: "14px", marginLeft: "12px", color: "gray" }}>{convertTimestamp(createdAt?.seconds)}</Typography>
           </Box>
           <Typography variant="p" sx={{ marginTop: "10px", fontSize: "14px" }}>
             {text}
