@@ -19,7 +19,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { addToBookmarks, db } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { convertTimestamp } from "../../utils/date";
 
 const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
@@ -28,6 +28,8 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
 
   // Navigate
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentRoute = location.pathname.split("/").pop();
 
   /// Context
   const { openComments, setOpenComments, setOpen, open } =
@@ -210,15 +212,19 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
         <BookmarkBorderIcon
           sx={{ marginLeft: "55px", fontSize: "20px" }}
           onClick={() => {
-            addToBookmarks({
-              user: username,
+            if (currentRoute === "Bookmarks") {
+              alert("You already added this post to bookmarks!");
+            } else {
+              addToBookmarks({
+                user: username,
 
-              comments: comments,
-              createdAt: createdAt,
-              likes: likes,
-              name: name,
-              text: text,
-            });
+                comments: comments,
+                createdAt: createdAt,
+                likes: likes,
+                name: name,
+                text: text,
+              });
+            }
           }}
         />
         <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
