@@ -9,6 +9,7 @@ import { Box, Typography } from "@mui/material";
 
 const Bookmarks = () => {
   const [bookmarkPosts, setBookmarkPosts] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   // Redux
 
@@ -60,16 +61,22 @@ const Bookmarks = () => {
         >
           <SearchIcon style={{ color: "gray" }} />
           <input
+            value={searchValue}
             type="text"
             placeholder="Search bookmarks"
             className="bookmarks-input"
+            onChange={(e) => setSearchValue(e.target.value)}
           ></input>
         </Box>
       </Box>
       <div>
-        {usersBookmarks?.map((item) => (
-          <Ladybug key={item.id} {...item} />
-        ))}
+        {usersBookmarks
+          ?.filter((item) =>
+            item.text.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((item) => (
+            <Ladybug key={item.id} {...item} />
+          ))}
       </div>
     </Layout>
   );
