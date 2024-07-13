@@ -29,7 +29,7 @@ const Suggested = () => {
             alignItems: "center",
             borderRadius: "25px",
             border: "none",
-            backgroundColor: " rgb(243 244 246)",
+            backgroundColor: "rgb(243 244 246)",
             padding: "10px",
             marginLeft: "40px",
           }}

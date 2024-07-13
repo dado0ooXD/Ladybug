@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import {
   addDoc,
   collection,
+  getDocs,
   // getDocs,
   getFirestore,
   // orderBy,
@@ -36,6 +37,25 @@ const bookmarksCollection = collection(db, "bookmarks");
 //   return res;
 // };
 
+// Getting bookmarks
+
+export const getBookmarks = async () => {
+  try {
+    const bookmarksCollection = collection(db, "bookmarks");
+    const result = await getDocs(bookmarksCollection);
+    const bookmarks = result.docs.map((item) => {
+      const data = item.data();
+      const id = item.id;
+
+      return { ...data, id };
+    });
+
+    return bookmarks;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 // Add ladybug
 export const createLadybug = async (data) => {
   await addDoc(postCollection, data);
@@ -44,4 +64,5 @@ export const createLadybug = async (data) => {
 // Add to favorites
 export const addToBookmarks = async (data) => {
   await addDoc(bookmarksCollection, data);
+  // console.log(bookmarksCollection);
 };

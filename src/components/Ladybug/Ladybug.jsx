@@ -2,20 +2,30 @@ import { Box, Typography } from "@mui/material";
 import "./Ladybug.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
 import { useContext } from "react";
 import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, addText, addUserComment } from "../../store/commentSlice";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { addToBookmarks, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import {convertTimestamp} from '../../utils/date';
+import { convertTimestamp } from "../../utils/date";
 
 const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
+  // Bookmark collection
+  const bookmarks = collection(db, "bookmarks");
+
   // Navigate
   const navigate = useNavigate();
 
@@ -45,6 +55,7 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
   const likeLadybug = async () => {
     const docRef = doc(db, "posts", id);
     const docSnap = await getDoc(docRef);
+    // console.log("Like snap", docSnap.data())
     const likes = docSnap.data().likes;
     console.log(likes);
 
@@ -65,7 +76,6 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
       });
     }
   };
-
 
   return (
     <Box
@@ -112,7 +122,12 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
             >
               @{name}
             </Typography>
-            <Typography variant="p" sx={{ fontSize: "14px", marginLeft: "12px", color: "gray" }}>{convertTimestamp(createdAt?.seconds)}</Typography>
+            <Typography
+              variant="p"
+              sx={{ fontSize: "14px", marginLeft: "12px", color: "gray" }}
+            >
+              {convertTimestamp(createdAt?.seconds)}
+            </Typography>
           </Box>
           <Typography variant="p" sx={{ marginTop: "10px", fontSize: "14px" }}>
             {text}
@@ -152,7 +167,7 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
             {comments.length}
           </span>
         )}
-        { likes.includes(username) ? (
+        {likes.includes(username) ? (
           <FavoriteIcon
             style={{
               color: "#fa8072",
@@ -192,9 +207,20 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
             {likes.length}
           </span>
         )}
-        <BookmarkBorderIcon sx={{ marginLeft: "55px", fontSize: "20px" }} onClick={() => {
-          addToBookmarks({name, text, id, comments, likes})
-        }} />
+        <BookmarkBorderIcon
+          sx={{ marginLeft: "55px", fontSize: "20px" }}
+          onClick={() => {
+            addToBookmarks({
+              user: username,
+
+              comments: comments,
+              createdAt: createdAt,
+              likes: likes,
+              name: name,
+              text: text,
+            });
+          }}
+        />
         <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
       </Box>
     </Box>
