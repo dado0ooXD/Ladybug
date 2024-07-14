@@ -1,25 +1,42 @@
 import React, { useEffect, useState } from "react";
 import "./Bookmarks.css";
 import Layout from "../../layout/Layout";
-import { getBookmarks } from "../../firebase";
+import { db, getBookmarks } from "../../firebase";
 import { useSelector } from "react-redux";
 import Ladybug from "../../components/Ladybug/Ladybug";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Typography } from "@mui/material";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 const Bookmarks = () => {
   const [bookmarkPosts, setBookmarkPosts] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const bookmarkCollection = collection(db, "bookmarks");
 
   // Redux
 
   const username = useSelector((state) => state.user.username);
 
   // Getting bookmarks on page
+  // useEffect(() => {
+  //   getBookmarks().then((bookmarks) => {
+  //     setBookmarkPosts(bookmarks);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    getBookmarks().then((bookmarks) => {
-      setBookmarkPosts(bookmarks);
-    });
+    const renderBookmarks = async () => {
+      const collection = query(bookmarkCollection);
+      const bookmarks = await onSnapshot(collection, (snapshot) => {
+        setBookmarkPosts(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+        // console.log(posts, "Hi")
+      });
+
+      return bookmarks;
+    };
+    renderBookmarks();
   }, []);
 
   // Users bookmark posts

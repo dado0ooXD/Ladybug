@@ -88,11 +88,11 @@ const LadybugPost = () => {
               />
               <Box sx={{ marginLeft: "10px" }}>
                 <span style={{ fontWeight: "bold", fontSize: "15px" }}>
-                  {comments.name}
+                  {comments?.name}
                 </span>{" "}
                 <br />
                 <span style={{ fontSize: "13px", color: "gray" }}>
-                  @{comments.name}
+                  @{comments?.name}
                 </span>
               </Box>
             </Box>
@@ -102,7 +102,7 @@ const LadybugPost = () => {
             variant="p"
             sx={{ marginLeft: "65px", paddingBottom: "10px", fontSize: "14px" }}
           >
-            {comments.text}
+            {comments?.text}
           </Typography>
         </Box>
 

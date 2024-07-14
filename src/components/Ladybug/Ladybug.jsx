@@ -6,25 +6,29 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, addText, addUserComment } from "../../store/commentSlice";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { addToBookmarks, db } from "../../firebase";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { addToBookmarks, db, getBookmarks } from "../../firebase";
+import { useLocation, useNavigate } from "react-router-dom";
 import { convertTimestamp } from "../../utils/date";
 
 const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
   // Bookmark collection
   const bookmarks = collection(db, "bookmarks");
+
+  // Bookmarks
+  const [bookmarkPosts, setBookmarkPosts] = useState([]);
 
   // Navigate
   const navigate = useNavigate();
@@ -65,18 +69,47 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
     await updateDoc(docRef, {
       likes: [...likes, username],
     });
-    console.log("else ===>", likes);
+    // console.log("else ===>", likes);
   };
 
   const unlikeLadybug = async () => {
     const docRef = doc(db, "posts", id);
     const docSnap = await getDoc(docRef);
     const likes = docSnap.data().likes;
+    console.log(likes);
     if (likes.includes(username)) {
       await updateDoc(docRef, {
         likes: likes.filter((item) => item !== username),
       });
     }
+  };
+
+  // Adding to bookmarks
+
+  const addToBookM = (data) => {
+    if (currentRoute === "Bookmarks") {
+      alert("You already added this post to bookmarks!");
+    } else {
+      addToBookmarks(data);
+    }
+  };
+
+  // Bookmarks
+
+  useEffect(() => {
+    getBookmarks().then((bookmarks) => {
+      setBookmarkPosts(bookmarks);
+    });
+  }, []);
+
+  const isSaved = bookmarkPosts.find((item) => item.text === text);
+
+  // Remove from bookmark
+  const removeFromBookmark = async (text) => {
+    const targetPost = bookmarkPosts.find((item) => item.text === text);
+
+    const docRef = doc(db, "bookmarks", targetPost.id);
+    await deleteDoc(docRef);
   };
 
   return (
@@ -96,7 +129,6 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
         sx={{ flex: 3, display: "flex", cursor: "pointer" }}
       >
         <Box>
-          {" "}
           <img
             src="https://next-busy-bee.vercel.app/assets/profile-pic.png"
             alt="user-img"
@@ -209,24 +241,29 @@ const Ladybug = ({ text, name, id, comments, likes, createdAt }) => {
             {likes.length}
           </span>
         )}
-        <BookmarkBorderIcon
-          sx={{ marginLeft: "55px", fontSize: "20px" }}
-          onClick={() => {
-            if (currentRoute === "Bookmarks") {
-              alert("You already added this post to bookmarks!");
-            } else {
-              addToBookmarks({
+        {isSaved?.text === text && username === isSaved.user ? (
+          <BookmarkIcon
+            sx={{ marginLeft: "55px", fontSize: "20px" }}
+            onClick={() => {
+              removeFromBookmark(text);
+            }}
+          />
+        ) : (
+          <BookmarkBorderIcon
+            sx={{ marginLeft: "55px", fontSize: "20px" }}
+            onClick={() =>
+              addToBookM({
                 user: username,
-
+                // id: id,
                 comments: comments,
                 createdAt: createdAt,
                 likes: likes,
                 name: name,
                 text: text,
-              });
+              })
             }
-          }}
-        />
+          />
+        )}
         <IosShareIcon sx={{ marginLeft: "55px", fontSize: "20px" }} />
       </Box>
     </Box>
