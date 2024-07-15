@@ -12,6 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import SmsOutlinedIcon from "@mui/icons-material/SmsOutlined";
+import { convertTimestamp } from "../../utils/date";
 
 const LadybugPost = () => {
   const { id } = useParams();
@@ -86,14 +87,33 @@ const LadybugPost = () => {
                 className="user-img-post"
                 style={{ padding: "3px" }}
               />
-              <Box sx={{ marginLeft: "10px" }}>
-                <span style={{ fontWeight: "bold", fontSize: "15px" }}>
-                  {comments?.name}
-                </span>{" "}
-                <br />
-                <span style={{ fontSize: "13px", color: "gray" }}>
-                  @{comments?.name}
-                </span>
+              <Box
+                sx={{
+                  marginLeft: "10px",
+                  display: "flex",
+                }}
+              >
+                <Box>
+                  <span style={{ fontWeight: "bold", fontSize: "15px" }}>
+                    {comments?.name}
+                  </span>{" "}
+                  <br />
+                  <span style={{ fontSize: "13px", color: "gray" }}>
+                    @{comments?.name}
+                  </span>
+                </Box>
+
+                <Typography
+                  variant="p"
+                  sx={{
+                    fontSize: "14px",
+                    marginLeft: "30px",
+                    marginTop: "3px",
+                    color: "gray",
+                  }}
+                >
+                  {convertTimestamp(comments?.createdAt?.seconds)}
+                </Typography>
               </Box>
             </Box>
             <MoreHorizIcon sx={{ marginRight: "10px" }} />
